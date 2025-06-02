@@ -6,26 +6,11 @@
 </head>
 <body>
   <h2>تسجيل مستخدم جديد</h2>
-  <form onsubmit="registerUser(event)">
-    <input type="email" id="newEmail" placeholder="البريد الإلكتروني" required><br>
-    <input type="password" id="newPassword" placeholder="كلمة المرور" required><br>
+
+  <form action="register.php" method="post">
+    <input type="email" name="email" required placeholder="البريد الإلكتروني"><br>
+    <input type="password" name="password" required placeholder="كلمة المرور"><br>
     <button type="submit">تسجيل</button>
   </form>
-
-  <script>
-    function registerUser(event) {
-      event.preventDefault();
-
-      const email = document.getElementById("newEmail").value;
-      const password = document.getElementById("newPassword").value;
-
-      // حفظ بيانات المستخدم في LocalStorage
-      localStorage.setItem("userEmail", email);
-      localStorage.setItem("userPassword", password);
-
-      alert("تم التسجيل بنجاح! يمكنك الآن تسجيل الدخول.");
-      window.location.href = "login.html";
-    }
-  </script>
 </body>
 </html>

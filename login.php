@@ -1,29 +1,25 @@
 <?php
-// لا تضع أي مسافات أو أسطر قبل <?php
+require 'db.php';
 
-// بيانات دخول افتراضية
-$correct_email = "admin@example.com";
-$correct_password = "123456";
+$email = $_POST['email'] ?? '';
+$password = $_POST['password'] ?? '';
 
-// استلام البيانات من النموذج
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
+// تحضير الاستعلام
+$stmt = $conn->prepare("SELECT password FROM users WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$stmt->store_result();
 
-    if ($email === $correct_email && $password === $correct_password) {
-        // التوجيه إلى الصفحة الأخرى
+if ($stmt->num_rows === 1) {
+    $stmt->bind_result($hashed);
+    $stmt->fetch();
+
+    if (password_verify($password, $hashed)) {
+        // ✅ تسجيل دخول ناجح
         header("Location: youser.html");
         exit();
-    } else {
-        // بيانات خاطئة، أرجع المستخدم لصفحة تسجيل الدخول
-        echo "<script>
-                alert('بيانات غير صحيحة، حاول مرة أخرى');
-                window.location.href = 'login.html';
-              </script>";
-        exit();
     }
-} else {
-    // لو حد دخل على login.php مباشرة بدون POST
-    header("Location: login.html");
-    exit();
 }
+
+// ❌ فشل تسجيل الدخول
+echo "<script>alert('البريد الإلكتروني أو كلمة المرور غير صحيحة'); window.location.href = 'login.html';</script>";
