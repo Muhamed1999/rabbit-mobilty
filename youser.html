@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>نظام إدارة الأسكوترات</title>
+  <link rel="stylesheet" href="youser.css">
+</head>
+<body>
+  <div class="container">
+    <h1>نظام إدارة الأسكوترات</h1>
+
+    <!-- البحث عن الأسكوتر -->
+    <div class="section">
+      <h2>🔍 البحث عن أسكوتر</h2>
+      <input type="text" placeholder="اكتب اسم الأسكوتر..." id="scooterSearch">
+    </div>
+
+    <!-- طلب قطع غيار -->
+    <div class="section">
+      <h2>🛠 طلب قطعة غيار</h2>
+      <form id="partForm">
+        <input type="text" id="scooterName" placeholder="اسم الأسكوتر" required>
+        <input type="text" id="partName" placeholder="اسم القطعة" required>
+
+<!-- تحت <ul id="stockList"> -->
+<div id="partInputContainer">
+  <button type="button" id="addPartBtn">➕ إضافة قطعة جديدة</button>
+</div>
+
+
+        <textarea id="note" placeholder="ملاحظات إضافية"></textarea>
+        <button type="submit">إرسال الطلب</button>
+        <p id="stockMessage"></p>
+      </form>
+    </div>
+
+    <!-- عرض التقرير -->
+    <div class="section">
+      <h2>📋 الطلبات</h2>
+      <div class="report-box">
+        <p>طلبات اليوم: 0</p>
+        <p> الموافق عليها: 0</p>
+        <p>الطلبات المعلقة: 0</p>
+      </div>
+    </div>
+
+    <!-- عرض المخزون -->
+    <div class="section">
+      <h2>📦 المخزون</h2>
+      <ul id="stockList">
+        <li>بطارية - 4</li>
+        <li>إطار خلفي - 2</li>
+        <li>فرامل أمامية - 10</li>
+        <li>يد سرعه - 2</li>
+        <li>يد فرامل شمال  - 13</li>
+        <li>يد فرامل يمين - 4</li>
+        <li>سلك فرامل امامي - 5</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+// إضافة حقل جديد كل مرة
+document.getElementById("addPartBtn").addEventListener("click", function () {
+  const container = document.getElementById("partInputContainer");
+
+  const input = document.createElement("input");
+  input.type = "text";
+  input.placeholder = "اسم القطعة الجديدة";
+  input.className = "new-part";
+  input.style.display = "block";
+  input.style.margin = "10px 0";
+
+  container.insertBefore(input, this);
+});
+
+// عند إرسال الفورم
+document.getElementById("partForm").addEventListener("submit", function(e) {
+  const scooter = document.getElementById("scooterName").value.trim();
+  const part = document.getElementById("partName").value.trim();
+  const newParts = document.querySelectorAll(".new-part");
+
+  let hasValue = scooter && part;
+  newParts.forEach(input => {
+    if (input.value.trim() !== "") {
+      hasValue = true;
+    }
+  });
+
+  if (!hasValue) {
+    e.preventDefault();
+    alert("برجاء كتابة اسم الأسكوتر أو اختيار/إضافة قطعة غيار.");
+    return;
+  }
+
+  // فحص المخزون
+
+
+
+const stock = {
+    "بطارية": 4,
+    "إطار خلفي": 2,
+    "فرامل أمامية": 5,
+    "يد سرعه": 2,
+    " يد فرامل شمال": 13,
+    "يد فرامل يمين": 4,
+    "سلك فرامل امامي": 5,
+  };
+
+  const message = document.getElementById("stockMessage");
+  if (stock[part] && stock[part] > 0) {
+    message.textContent = "✔ القطعة متوفرة في المخزون.";
+    message.style.color = "green";
+  } else {
+    message.textContent = "❌ القطعة غير متوفرة.";
+    message.style.color = "red";
+  }
+
+  // هنا لو حابب تبعت فعلاً، شيل e.preventDefault()
+});
+
+
+
+  </script>
+</body>
+</html>
