@@ -1,23 +1,59 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8">
-<title>تسجيل الدخول</title>
-
-<link rel="stylesheet" href="login.css">
-
+  <meta charset="UTF-8">
+  <title>تسجيل الدخول</title>
+  <link rel="stylesheet" href="login.css">
 </head>
 <body>
-<div class="login-box">
+  <div class="login-box">
     <h3>تسجيل الدخول</h3>
-<form action="login.php" method="post">
-  <input type="email" name="email" placeholder="البريد الإلكتروني" required>
-  <input type="password" name="password" placeholder="كلمة المرور" required>
-  <button type="submit">دخول</button>
-</form>
+    <form onsubmit="return checkLogin(event)">
+      <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+      <input type="password" id="password" placeholder="كلمة المرور" required>
+      <button type="submit">دخول</button>
+    </form>
+  </div>
 
-</div>
+  <!-- <script>
+    function checkLogin(event) {
+      event.preventDefault(); // يمنع إرسال النموذج
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      // تحقق بسيط (بيانات افتراضية)
+      const correctEmail = "admin@example.com";
+      const correctPassword = "123456";
+
+      if (email === correctEmail && password === correctPassword) {
+        window.location.href = "youser.html"; // التوجيه للصفحة الأخرى
+      } else {
+        alert("البريد الإلكتروني أو كلمة المرور غير صحيحة");
+      }
+    }
+  </script> -->
+
+
+<script>
+  function checkLogin(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    // جلب بيانات المستخدم من LocalStorage
+    const savedEmail = localStorage.getItem("userEmail");
+    const savedPassword = localStorage.getItem("userPassword");
+
+    if (email === savedEmail && password === savedPassword) {
+      window.location.href = "youser.html";
+    } else {
+      alert("البريد الإلكتروني أو كلمة المرور غير صحيحة");
+    }
+  }
+</script>
+
+
 </body>
 </html>
-
-
