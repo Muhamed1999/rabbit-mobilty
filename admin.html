@@ -1,0 +1,35 @@
+<?php
+session_start();
+if (!isset($_SESSION['admin'])) {
+  header("Location: admin-login.html");
+  exit();
+}
+?>
+<!DOCTYPE html>
+
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>لوحة تحكم الإدارة</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="dashboard">
+    <h1>👨‍💼 لوحة تحكم الإدارة</h1>
+    <div class="cards">
+      <a href="admin-users.php" class="card">
+        <h2>👥 المستخدمين</h2>
+        <p>عرض قائمة المستخدمين المسجلين</p>
+      </a>
+      <a href="admin-requests.php" class="card">
+        <h2>📋 الطلبات</h2>
+        <p>عرض الطلبات ومتابعتها</p>
+      </a>
+      <a href="admin-inventory.php" class="card">
+        <h2>📦 المخزون</h2>
+        <p>عرض حالة قطع الغيار</p>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
